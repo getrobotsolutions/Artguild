@@ -1587,46 +1587,7 @@
     }
 
 
-    $("#form-submit").click(function( e ) {
-
-        var q1 = $('input:radio[name=q1]:checked').val();
-        //alert(q1);
-        if (q1==null) {
-            alert("Please Select an Question 1.");
-            $("#q1").focus();
-            return false;
-        }
-        var q2 = $('input:radio[name=q2]:checked').val();
-        //alert(q2);
-        if (q2==null) {
-            alert("Please Select an Question 2.");
-            $("#q2").focus();
-            return false;
-        }
-        event.preventDefault();
-
-
-        var dataString = {'ScanCode': message, 'q1':q1 , 'q2': q2};
-
-        $.ajax({
-            url: "https://robotaisolutions.com/BadgeScanning/crownBioApi.php",
-            type: "post",
-            data: dataString,
-
-            success: function (data) {
-                //alert(data);
-                console.log(data);
-                if (data.response === 'success') {
-                    //alert("Hi " + fname + " " + lname + ", welcome to the Crown Bio" + scanCode +" "+ bnumber);
-                    //alert(scancode);
-                    barcode = "";
-                    array = null;
-                    location.href = "menu.html";
-                }
-
-            }
-        });
-    });
+    
 function calculateTimeDuration() {
     /*var hr = Math.floor(secs / 3600);
     var min = Math.floor((secs - (hr * 3600)) / 60);
@@ -1642,110 +1603,10 @@ function calculateTimeDuration() {
     }
     return hr + ':' + min + ':' + sec;*/
     timerCounter=timerCounter-1;
-    /*if (timerCounter<56) {
-        
-        var button = btnStartRecording;
-
-
-                if(button.value === 'Stop Recording' ) {
-                    //btnPauseRecording.style.display = 'none';
-                    button.disabled = true;
-                    button.disableStateWaiting = true;
-                    setTimeout(function() {
-                        button.disabled = false;
-                        button.disableStateWaiting = false;
-                    }, 2000);
-
-                    //button.innerHTML = 'Start Recording';
-                    button.value="Start Recording";
-                    //btnStartRecordingImg.src="images/record.png";
-                    //clearTimeout(counterloop);
-                    //timerCounter=60;
-
-                    function stopStream() {
-                        if(button.stream && button.stream.stop) {
-                            button.stream.stop();
-                            button.stream = null;
-                        }
-
-                        if(button.stream instanceof Array) {
-                            button.stream.forEach(function(stream) {
-                                stream.stop();
-                            });
-                            button.stream = null;
-                        }
-
-                        videoBitsPerSecond = null;
-                        var html = 'Recording status: stopped';
-                        html += '<br>Size: ' + bytesToSize(button.recordRTC.getBlob().size);
-                        recordingPlayer.parentNode.parentNode.querySelector('h2').innerHTML = html;
-                    }
-
-                    if(button.recordRTC) {
-                        if(button.recordRTC.length) {
-                            button.recordRTC[0].stopRecording(function(url) {
-                                if(!button.recordRTC[1]) {
-                                    button.recordingEndedCallback(url);
-                                    stopStream();
-
-                                    saveToDiskOrOpenNewTab(button.recordRTC[0]);
-                                    return;
-                                }
-
-                                button.recordRTC[1].stopRecording(function(url) {
-                                    button.recordingEndedCallback(url);
-                                    stopStream();
-                                });
-                            });
-                        }
-                        else {
-                            button.recordRTC.stopRecording(function(url) {
-                                if(button.blobs && button.blobs.length) {
-                                    var blob = new File(button.blobs, getFileName(fileExtension), {
-                                        type: mimeType
-                                    });
-                                    
-                                    button.recordRTC.getBlob = function() {
-                                        return blob;
-                                    };
-
-                                    url = URL.createObjectURL(blob);
-                                }
-
-                                if(chkFixSeeking.checked === true) {
-                                    // to fix video seeking issues
-                                    getSeekableBlob(button.recordRTC.getBlob(), function(seekableBlob) {
-                                        button.recordRTC.getBlob = function() {
-                                            return seekableBlob;
-                                        };
-
-                                        url = URL.createObjectURL(seekableBlob);
-
-                                        button.recordingEndedCallback(url);
-                                        saveToDiskOrOpenNewTab(button.recordRTC);
-                                        stopStream();
-                                    })
-                                    return;
-                                }
-
-                                button.recordingEndedCallback(url);
-                                saveToDiskOrOpenNewTab(button.recordRTC);
-                                stopStream();
-                            });
-                        }
-                    }
-
-                    return;
-
-                }
-            
-            
-    }*/
-        return timerCounter;
-
-    
-    
-    
+    if (timerCounter < 10) {
+        timerCounter = "0" + timerCounter;
+    }
+    return timerCounter;
 }
 
 </script>
