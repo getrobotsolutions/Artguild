@@ -332,7 +332,11 @@
 
         <script>
             var video = document.createElement('video');
+
+            
             video.controls = false;
+            var counterloop="";
+            var timerCounter=60;
             var mediaElement = getHTMLMediaElement(video, {
                 title: '.',
                 buttons: ['full-screen'/*, 'take-snapshot'*/],
@@ -393,7 +397,9 @@
 
                     //button.innerHTML = 'Start Recording';
                     button.value="Start Recording";
-                    btnStartRecordingImg.src="images/record.png"
+                    btnStartRecordingImg.src="images/record.png";
+                    clearTimeout(counterloop);
+                    timerCounter=60;
 
                     function stopStream() {
                         if(button.stream && button.stream.stop) {
@@ -493,8 +499,8 @@
                             /*if(!recorder) {
                                 return;
                              }*/
-                             document.querySelector('#timer').innerHTML = calculateTimeDuration((new Date().getTime() - dateStarted) / 1000);
-                            setTimeout(looper, 1000);
+                             document.querySelector('#timer').innerHTML = calculateTimeDuration();
+                            counterloop=setTimeout(looper, 1000);
                         })();
 
                         chkFixSeeking.parentNode.style.display = 'none';
@@ -1609,8 +1615,8 @@
         });
     });
     
-function calculateTimeDuration(secs) {
-    var hr = Math.floor(secs / 3600);
+function calculateTimeDuration() {
+    /*var hr = Math.floor(secs / 3600);
     var min = Math.floor((secs - (hr * 3600)) / 60);
     var sec = Math.floor(secs - (hr * 3600) - (min * 60));
     if (min < 10) {
@@ -1622,7 +1628,8 @@ function calculateTimeDuration(secs) {
     if(hr <= 0) {
         return min + ':' + sec;
     }
-    return hr + ':' + min + ':' + sec;
+    return hr + ':' + min + ':' + sec;*/
+    return timerCounter=timerCounter-1;
 }
 </script>
 <style type="text/css">
