@@ -110,7 +110,7 @@
 
     <section class="experiment recordrtc main-content" style="margin-top: 40px !important;">
         <button id="btn-start-recording" style="background-color: transparent;border:none;margin-left: 200px; " value="Start Recording"><img src="images/record.png" ></button>
-        <img id="btn-stop-recording" src="images/stop.png">
+        <img id="btn-stop-recording" src="images/stop.png" onclick="stopRecordingf()">
         <img src="images/save.png" id="save-to-disk">
         <span class="countdown" style="color: #c91428;position: absolute;top: 1161px;left: 416px;font-size: 100px;">00:<span id="timer">60</span></span>
                 
@@ -386,10 +386,10 @@
                 chkFixSeeking.parentNode.style.display = 'inline-block';
             };
 
-            btnStopRecording.onclick = function(event) {
-                var button = btnStartRecording;
+            //btnStopRecording.onclick = function() {
+            function stopRecordingf(event){    var button = btnStartRecording;
 
-                if(button.value === 'Stop Recording') {
+                if(button.value === 'Stop Recording' ) {
                     //btnPauseRecording.style.display = 'none';
                     button.disabled = true;
                     button.disableStateWaiting = true;
@@ -505,8 +505,14 @@
                             /*if(!recorder) {
                                 return;
                              }*/
+
                              document.querySelector('#timer').innerHTML = calculateTimeDuration();
+
                             counterloop=setTimeout(looper, 1000);
+                            if(timerCounter<1){
+                                clearTimeout(counterloop);
+                                stopRecordingf();
+                            }
                         })();
 
                         chkFixSeeking.parentNode.style.display = 'none';
@@ -1621,7 +1627,6 @@
             }
         });
     });
-    
 function calculateTimeDuration() {
     /*var hr = Math.floor(secs / 3600);
     var min = Math.floor((secs - (hr * 3600)) / 60);
@@ -1636,8 +1641,113 @@ function calculateTimeDuration() {
         return min + ':' + sec;
     }
     return hr + ':' + min + ':' + sec;*/
-    return timerCounter=timerCounter-1;
+    timerCounter=timerCounter-1;
+    /*if (timerCounter<56) {
+        
+        var button = btnStartRecording;
+
+
+                if(button.value === 'Stop Recording' ) {
+                    //btnPauseRecording.style.display = 'none';
+                    button.disabled = true;
+                    button.disableStateWaiting = true;
+                    setTimeout(function() {
+                        button.disabled = false;
+                        button.disableStateWaiting = false;
+                    }, 2000);
+
+                    //button.innerHTML = 'Start Recording';
+                    button.value="Start Recording";
+                    //btnStartRecordingImg.src="images/record.png";
+                    //clearTimeout(counterloop);
+                    //timerCounter=60;
+
+                    function stopStream() {
+                        if(button.stream && button.stream.stop) {
+                            button.stream.stop();
+                            button.stream = null;
+                        }
+
+                        if(button.stream instanceof Array) {
+                            button.stream.forEach(function(stream) {
+                                stream.stop();
+                            });
+                            button.stream = null;
+                        }
+
+                        videoBitsPerSecond = null;
+                        var html = 'Recording status: stopped';
+                        html += '<br>Size: ' + bytesToSize(button.recordRTC.getBlob().size);
+                        recordingPlayer.parentNode.parentNode.querySelector('h2').innerHTML = html;
+                    }
+
+                    if(button.recordRTC) {
+                        if(button.recordRTC.length) {
+                            button.recordRTC[0].stopRecording(function(url) {
+                                if(!button.recordRTC[1]) {
+                                    button.recordingEndedCallback(url);
+                                    stopStream();
+
+                                    saveToDiskOrOpenNewTab(button.recordRTC[0]);
+                                    return;
+                                }
+
+                                button.recordRTC[1].stopRecording(function(url) {
+                                    button.recordingEndedCallback(url);
+                                    stopStream();
+                                });
+                            });
+                        }
+                        else {
+                            button.recordRTC.stopRecording(function(url) {
+                                if(button.blobs && button.blobs.length) {
+                                    var blob = new File(button.blobs, getFileName(fileExtension), {
+                                        type: mimeType
+                                    });
+                                    
+                                    button.recordRTC.getBlob = function() {
+                                        return blob;
+                                    };
+
+                                    url = URL.createObjectURL(blob);
+                                }
+
+                                if(chkFixSeeking.checked === true) {
+                                    // to fix video seeking issues
+                                    getSeekableBlob(button.recordRTC.getBlob(), function(seekableBlob) {
+                                        button.recordRTC.getBlob = function() {
+                                            return seekableBlob;
+                                        };
+
+                                        url = URL.createObjectURL(seekableBlob);
+
+                                        button.recordingEndedCallback(url);
+                                        saveToDiskOrOpenNewTab(button.recordRTC);
+                                        stopStream();
+                                    })
+                                    return;
+                                }
+
+                                button.recordingEndedCallback(url);
+                                saveToDiskOrOpenNewTab(button.recordRTC);
+                                stopStream();
+                            });
+                        }
+                    }
+
+                    return;
+
+                }
+            
+            
+    }*/
+        return timerCounter;
+
+    
+    
+    
 }
+
 </script>
 <style type="text/css">
     video{}

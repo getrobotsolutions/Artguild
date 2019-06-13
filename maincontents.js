@@ -144,28 +144,30 @@ function OnJoystickControlled(strPara){
     if(btn_info[0] == '1'){
            // window.external.ChangeLanguage("en-us");
             SetVolume(1);
-            window.external.PlaySpeech("You look nice, I like you, please tap my screen to begin.");//I'm here to assist you, press any button on my screen to begin");
+            window.external.PlaySpeech("Hello, my name is Tracey. I am with the Clarity PPM team. Since I am from the future, I’d love to hear your thoughts on artificial intelligence.");//I'm here to assist you, press any button on my screen to begin");
           
     }
 
     if(btn_info[1] == '1'){
         //window.external.ChangeLanguage("en-us");
         SetVolume(1);
-        window.external.PlaySpeech("Come take a picture with me.");
+        window.external.PlaySpeech("How do you think artificial intelligence will change PPM?");
         
     }
     if(btn_info[2] == '1'){
         //window.external.ChangeLanguage("en-us");
             SetVolume(1);
-            window.external.PlaySpeech("Check out my app to learn more about Crown bio.");
+            window.external.PlaySpeech("Not sure about AI? ");
     }
     if(btn_info[3] == '1'){
         //window.external.ChangeLanguage("en-us");
         SetVolume(1);
-       window.external.PlaySpeech("Ask me a question?");
+       window.external.PlaySpeech("Tell me about your favorite feature in Clarity PPM.");
         
     }
     if(btn_info[4] == '1'){
-        FC_ContentsCall('Config');       
+        //FC_ContentsCall('Config');  
+        SetVolume(1);
+       window.external.PlaySpeech("Just push the record button, and I will make a short video. When the recording starts, please show me your badge so I can remember you.");     
     }
 }
