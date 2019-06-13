@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html" charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=10"/>
+
+    <script language="JavaScript" type="text/javascript" src="Scripts/BaseCommand.js"></script>
+    <script language="JavaScript" type="text/javascript" src="Scripts/BaseEvent.js"></script>
+    <script language="JavaScript" type="text/javascript" src="Scripts/LogConsole.js"></script>
+    <script language="JavaScript" type="text/javascript" src="Scripts/Language.js"></script>
+    <script language="JavaScript" type="text/javascript" src="Scripts/custom.js"></script>
+    <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="maincontents.js"></script>
+    <script src="boots/js/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="boots/css/bootstrap.min.css">
+    
+    <link href="css/Main.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .keyboard {
+            text-align: center;
+            background-image: url('images/keyboard/keyboard_bg.png');
+            background-repeat: no-repeat;
+            width: 1080px;
+            margin-top: -1453px;
+            position: absolute;
+            z-index: 101;
+        }
+
+        .top{
+            margin-right: 10px;
+            margin-top: 5px;
+            padding-top: 15px;
+            text-align: right;
+        }
+
+        .address {
+            position: absolute;
+            left: 110px;
+            margin-top: 25px;
+        }
+
+        .address a {
+            color: #0a4266 !important;
+        }
+
+        .wrap {
+            margin-top: 30px;
+        }
+
+        .line01 {
+
+        }
+
+        .line02 {
+            position:absolute;
+            margin-left: 60px;
+        }
+
+        .line03 {
+            margin-right: 80px;
+            margin-top: -95px;
+        }
+
+        .line04 {
+            margin-right: 40px;
+        }
+
+        .line05 {
+
+        }
+
+        .enter {
+            margin-left: 880px;
+            margin-top: 3px;
+        }
+
+    </style>
+</head>
+
+<body  onbeforeunload="JSUnload()" ondragstart="return false;" ondrop="return false;" style="-ms-user-select:none;" oncontextmenu="return false;">
+
+  
+    <div class="config" onclick="FC_ContentsCall('Config')">
+        <img src="assets/home-config.png" height="80">
+    </div>
+    
+
+  <img src="assets/text.png">
+  <section class="main-content">
+    <img src="assets/headphone.png" width="1080">
+<!--    <h1 class="welcome-text">TAP ON THE SCREEN</br>TO BEGIN</h1>
+    <img src="assets/icons/qr-code-1.png" style="position: relative;top: 460px;left: 670px;width: 355px;">
+-->
+    
+
+  </section>
+  <div id="button1" onclick="location.href='clarity.html'">Clarity PPM</div>
+    <div id="button2" onclick="location.href='broadcom.html'"><img src="assets/logo.png"></div>
+
+  <footer>
+    <!--<img src="assets/footer.png" width="700">-->
+  </footer>
+
+
+  <style type="text/css">
+
+    .main-content {
+        height: 960px;
+        margin-top: 0;
+        padding-top: 10px;
+        background-color: transparent;
+    }
+    header{
+        background: transparent;    
+    }
+    body{
+        background-image: url(assets/background.png);
+        background-size: 1080px;
+        background-position:  0 0px;
+        background-repeat: no-repeat;
+    }
+    #button1{
+        color: #000000;
+        font-size: 60px; 
+        font-weight: bold;
+        left: 100px;
+        width: 48%;
+        float: left;
+        bottom: 10px;
+        display: block;
+        text-align: center;
+    }
+    #button2{
+        width: 48%;
+        float: left;
+        display: block;
+        text-align: center;
+    }
+</style>
+
+
+<script>
+
+        //ChangeLanguage('en-us');
+        $(document).ready(function() {
+
+            flag = true;
+
+
+            var barcode = "";
+            $(document).keydown(function (e) {
+                var code = (e.keyCode ? e.keyCode : e.which);
+                console.log(code);
+                if(flag !== false) {
+                    //if(code === 13)// Enter key hit
+                    if (code === 16) {
+
+                        flag = false;
+                        //alert(barcode);
+                        //barcode = barcode.split('').join('');
+                        //var array = barcode.split("Ü");
+                        //var scancode = array[0].toString().toLowerCase();
+                        //var bnumber = array[1].toString().toLowerCase();
+                        //var fname = array[2].toString().toLowerCase();
+                        //var lname = array[3].toString().toLowerCase();
+                        var array = barcode.split("ü");
+                        var scancode = array[0].toString().toLowerCase();
+
+                       
+
+
+
+                    var dataString = {'ScanCode': scancode};
+                        $.ajax({
+                            url: "https://robotaisolutions.com/BadgeScanning/interstateRestoration.php",
+                            type: "post",
+                            data: dataString,
+
+                            success: function (data) {
+                                console.log(data);
+                                if (data.response === 'success') {
+                                    PlaySpeech("Welcome" + data.fname + " " + data.lname)
+                                    //alert(scancode);
+                                    barcode = "";
+                                    array = null;
+                                    location.href = "menu.html";
+                                }
+
+                            }
+                        });
+                    
+
+
+                    }
+                    else {
+                        barcode = barcode + String.fromCharCode(code);
+                    }
+                }
+                
+
+            });
+
+        });
+    </script>
+
+<script>
+    var message = "";
+    function ShowKeyboard()
+    {
+        document.getElementById("keyboard").style.display = "block";
+        document.getElementById("address").innerHTML = "Please Enter your Badge Number";
+    }
+
+
+    function HideKeyboard()
+    {
+        document.getElementById("keyboard").style.display = "none";
+
+        //message = "";
+        //document.getElementById("address").innerHTML = message;
+    }
+
+
+
+    function keyboard(strPara)
+    {
+        if (strPara == "bs")
+        {
+            message = message.slice(0, -1);
+        }
+
+        else
+        {
+            message += strPara;
+        }
+
+        document.getElementById("address").innerHTML = message;
+    }
+
+    function getMessage() {
+        return message;
+    }
+
+
+    $("#form-submit").click(function( e ) {
+
+        var q1 = $('input:radio[name=q1]:checked').val();
+        //alert(q1);
+        if (q1==null) {
+            alert("Please Select an Question 1.");
+            $("#q1").focus();
+            return false;
+        }
+        var q2 = $('input:radio[name=q2]:checked').val();
+        //alert(q2);
+        if (q2==null) {
+            alert("Please Select an Question 2.");
+            $("#q2").focus();
+            return false;
+        }
+        event.preventDefault();
+
+
+        var dataString = {'ScanCode': message, 'q1':q1 , 'q2': q2};
+
+        $.ajax({
+            url: "https://robotaisolutions.com/BadgeScanning/crownBioApi.php",
+            type: "post",
+            data: dataString,
+
+            success: function (data) {
+                //alert(data);
+                console.log(data);
+                if (data.response === 'success') {
+                    //alert("Hi " + fname + " " + lname + ", welcome to the Crown Bio" + scanCode +" "+ bnumber);
+                    //alert(scancode);
+                    barcode = "";
+                    array = null;
+                    location.href = "menu.html";
+                }
+
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
