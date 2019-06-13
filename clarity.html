@@ -109,8 +109,8 @@
     
 
     <section class="experiment recordrtc main-content" style="margin-top: 40px !important;">
-        <button id="btn-start-recording" style="background-color: transparent;border:none;margin-left: 300px; "><img src="images/record.png" value="Stop Recording"></button>
-        <!--<img src="images/stop.png">-->
+        <button id="btn-start-recording" style="background-color: transparent;border:none;margin-left: 200px; " value="Start Recording"><img src="images/record.png" ></button>
+        <img id="btn-stop-recording" src="images/stop.png">
         <img src="images/save.png" id="save-to-disk">
                 
         <!--<button id="btn-pause-recording" style="display: none; font-size: 15px;">Pause</button>-->
@@ -373,7 +373,8 @@
             var defaultHeight;
 
             var btnStartRecording = document.querySelector('#btn-start-recording');
-            var btnStartRecordingImg = document.querySelector('#btn-start-recording img');
+            var btnStopRecording = document.querySelector('#btn-stop-recording');
+            //var btnStartRecordingImg = document.querySelector('#btn-start-recording img');
 
             window.onbeforeunload = function() {
                 btnStartRecording.disabled = false;
@@ -383,7 +384,7 @@
                 chkFixSeeking.parentNode.style.display = 'inline-block';
             };
 
-            btnStartRecording.onclick = function(event) {
+            btnStopRecording.onclick = function(event) {
                 var button = btnStartRecording;
 
                 if(button.value === 'Stop Recording') {
@@ -397,7 +398,7 @@
 
                     //button.innerHTML = 'Start Recording';
                     button.value="Start Recording";
-                    btnStartRecordingImg.src="images/record.png";
+                    //btnStartRecordingImg.src="images/record.png";
                     clearTimeout(counterloop);
                     timerCounter=60;
 
@@ -476,9 +477,12 @@
 
                     return;
                 }
+            }
+            btnStartRecording.onclick = function(event) {
+                var button = btnStartRecording;
 
                 if(!event) return;
-
+            if(button.value === 'Start Recording') {
                 button.disabled = true;
 
                 var commonConfig = {
@@ -492,7 +496,7 @@
                         //button.innerHTML = 'Stop Recording';
                         button.value = 'Stop Recording'
 
-                        btnStartRecordingImg.src="images/stop.png"
+                        //btnStartRecordingImg.src="images/stop.png"
                         button.disabled = false;
                         dateStarted = new Date().getTime();
                         (function looper() {
@@ -647,6 +651,7 @@
                         recordingPlayer.parentNode.parentNode.querySelector('h2').innerHTML = '<img src="https://www.webrtc-experiment.com/images/progress.gif">';
                     };
                 }
+            }
 
             };
 
