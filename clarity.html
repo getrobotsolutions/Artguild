@@ -112,6 +112,7 @@
         <button id="btn-start-recording" style="background-color: transparent;border:none;margin-left: 200px; " value="Start Recording"><img src="images/record.png" ></button>
         <img id="btn-stop-recording" src="images/stop.png">
         <img src="images/save.png" id="save-to-disk">
+        <span class="countdown" style="color: #c91428;position: absolute;top: 1161px;left: 416px;font-size: 100px;">00:<span id="timer">60</span></span>
                 
         <!--<button id="btn-pause-recording" style="display: none; font-size: 15px;">Pause</button>-->
 
@@ -156,13 +157,14 @@
 
             <div style="margin-top: 30px;" id="recording-player"></div>
 
-            <div class="timer-text">You have up to <span id="timer">60</span> seconds to record your video.</div>
+            <div class="timer-text">You have up to 60 seconds to record your video.</div>
 
             <div id="keyboard" class="keyboard" style="display: none">
                 <div class="top">
                     <font class="address" size="6px"><a id="address" onmousedown="return false"></a></font>
                     <img src="Images/keyboard/save.png" id="save-from-keyboard" > &nbsp;
                     <img src="Images/keyboard/cancel.png" onclick="HideKeyboard()">
+                    
                 </div>
                 <div class="wrap" >
                     <div class="line01">
@@ -276,7 +278,7 @@
             text-align: center;
             font-size: 40px;
                 position: absolute;
-            top: 1270px;
+            top: 1290px;
             left: 171px;
         }
         #button2{
