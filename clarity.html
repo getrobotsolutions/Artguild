@@ -359,7 +359,7 @@
 
             var div = document.createElement('section');
             mediaElement.media.parentNode.appendChild(div);
-            mediaElement.media.muted = false;
+            mediaElement.media.muted = true;
             mediaElement.media.autoplay = true;
             mediaElement.media.playsinline = true;
             div.appendChild(mediaElement.media);
@@ -422,6 +422,7 @@
                         html += '<br>Size: ' + bytesToSize(button.recordRTC.getBlob().size);
                         recordingPlayer.parentNode.parentNode.querySelector('h2').innerHTML = html;
                     }
+                    stopStream();
 
                     if(button.recordRTC) {
                         if(button.recordRTC.length) {
