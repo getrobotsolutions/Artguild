@@ -109,7 +109,7 @@
     
 
     <section class="experiment recordrtc main-content" style="margin-top: 40px !important;">
-        <button id="btn-start-recording" style="background-color: transparent;border:none;margin-left: 200px; " value="Start Recording"><img src="images/record.png" ></button>
+        <button id="btn-start-recording" style="background-color: transparent;border:none;margin-left: 200px; " value="Start Recording"><img id="btn_start_recording_img" src="images/record.png" ></button>
         <img id="btn-stop-recording" src="images/stop.png" onclick="stopRecordingf()">
         <img src="images/save.png" id="save-to-disk">
         <span class="countdown" style="color: #c91428;position: absolute;top: 1161px;left: 416px;font-size: 100px;">00:<span id="timer">60</span></span>
@@ -164,7 +164,6 @@
                     <font class="address" size="6px"><a id="address" onmousedown="return false"></a></font>
                     <img src="Images/keyboard/save.png" id="save-from-keyboard" > &nbsp;
                     <img src="Images/keyboard/cancel.png" onclick="HideKeyboard()">
-                    
                 </div>
                 <div class="wrap" >
                     <div class="line01">
@@ -359,7 +358,7 @@
 
             var div = document.createElement('section');
             mediaElement.media.parentNode.appendChild(div);
-            mediaElement.media.muted = false;
+            mediaElement.media.muted = true;
             mediaElement.media.autoplay = true;
             mediaElement.media.playsinline = true;
             div.appendChild(mediaElement.media);
@@ -393,6 +392,8 @@
                     //btnPauseRecording.style.display = 'none';
                     button.disabled = true;
                     button.disableStateWaiting = true;
+                    document.getElementById("btn_start_recording_img").src = "images/record.png";
+
                     setTimeout(function() {
                         button.disabled = false;
                         button.disableStateWaiting = false;
@@ -403,6 +404,7 @@
                     //btnStartRecordingImg.src="images/record.png";
                     clearTimeout(counterloop);
                     timerCounter=60;
+                    stopStream();
 
                     function stopStream() {
                         if(button.stream && button.stream.stop) {
@@ -466,7 +468,7 @@
                                         button.recordingEndedCallback(url);
                                         saveToDiskOrOpenNewTab(button.recordRTC);
                                         stopStream();
-                                    })
+                                    });
                                     return;
                                 }
 
@@ -482,10 +484,12 @@
             }
             btnStartRecording.onclick = function(event) {
                 var button = btnStartRecording;
+                var button_image = document.getElementById("btn_start_recording_img");
 
                 if(!event) return;
             if(button.value === 'Start Recording') {
                 button.disabled = true;
+                button_image.src = "images/record_disabled.png";
 
                 var commonConfig = {
                     
