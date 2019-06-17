@@ -242,6 +242,9 @@
         <div id="button1" >Clarity PPM</div>
         <div id="button2" onclick="location.href='broadcom.html'"><img src="assets/logo.png"></div>
     </footer>
+    <div id="dialog-overlay"></div>
+    <div id="dialog-box">
+    </div>
 
     <style type="text/css">
         .main-content {
@@ -1154,7 +1157,8 @@
                     invokeSaveAsDialog(file, fname);
                     document.getElementById("btn_start_recording").src = "images/record.png";
                     document.getElementById("save-to-disk").src = "images/save_disabled.png";
-                    location.reload(true);
+                    //location.reload(true);
+                    ShowPopupSave();
                 };
 
                 /*document.querySelector('#open-new-tab').onclick = function() {
