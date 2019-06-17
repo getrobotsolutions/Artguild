@@ -111,7 +111,7 @@
     <section class="experiment recordrtc main-content" style="margin-top: 40px !important;">
         <button id="btn-start-recording" style="background-color: transparent;border:none;margin-left: 300px; " value="Start Recording"><img  id="btn_start_recording" src="images/record.png" ></button>
         <!--<img id="btn-stop-recording" src="images/stop_disabled.png" onclick="stopRecordingf()">-->
-        <img src="images/save_disabled.png" id="save-to-disk" onclick="saveToDiskOrOpenNewTab()">
+        <img src="images/save_disabled.png" id="save-to-disk" onclick="ShowKeyboard()">
         <span class="countdown" style="color: #c91428;position: absolute;top: 1161px;left: 416px;font-size: 100px;">00:<span id="timer">60</span></span>
                 
         <!--<button id="btn-pause-recording" style="display: none; font-size: 15px;">Pause</button>-->
@@ -517,9 +517,7 @@
                             counterloop=setTimeout(looper, 1000);
                             if(timerCounter<1){
                                 clearTimeout(counterloop);
-                                //stopRecordingf();
-                                saveToDiskOrOpenNewTab();
-                                stream.stop();
+                                ShowKeyboard();
 
                             }
                         })();
@@ -1083,7 +1081,7 @@
             }
 
             function saveToDiskOrOpenNewTab(recordRTC) {
-                var button = document.querySelector('#btn-start-recording');
+               /* var button = document.querySelector('#btn-start-recording');
 
                 stopRecordingf();
                 var today = new Date();
@@ -1098,7 +1096,7 @@
                 document.getElementById("save-to-disk").src = "images/save_disabled.png";
 
 
-
+*/
 
 
 
@@ -1122,7 +1120,7 @@
 
                 var fileName = getFileName(fileExtension);
 
-                document.querySelector('#save-to-disk').parentNode.style.display = 'block';
+                /*document.querySelector('#save-to-disk').parentNode.style.display = 'block';
 
                 document.querySelector('#save-to-disk').onclick = function() {
                     stopRecordingf();
@@ -1141,14 +1139,12 @@
                     invokeSaveAsDialog(file, fname);
                     document.getElementById("btn_start_recording").src = "images/record.png";
                     document.getElementById("save-to-disk").src = "images/save_disabled.png";
-                };
+                };*/
 
                 document.querySelector('#save-from-keyboard').onclick = function() {
                     if(!recordRTC) return alert('No recording found.');
                     var fname = getMessage();
                     HideKeyboard();
-
-
                     var file = new File([recordRTC.getBlob()], fileName, {
                         type: mimeType
                     });
@@ -1156,6 +1152,9 @@
                     fname =  fname.replace('.','_');
                     fname = fname + ".mkv";
                     invokeSaveAsDialog(file, fname);
+                    document.getElementById("btn_start_recording").src = "images/record.png";
+                    document.getElementById("save-to-disk").src = "images/save_disabled.png";
+                    location.reload(true);
                 };
 
                 /*document.querySelector('#open-new-tab').onclick = function() {
@@ -1587,12 +1586,13 @@
                 }
             }, false);
         </script>
-<script src="Scripts/Script.js"></script>
+<!--<script src="Scripts/Script.js"></script>-->
 
 <script>
     var message = "";
     function ShowKeyboard()
     {
+        stopRecordingf();
         document.getElementById("keyboard").style.display = "block";
         document.getElementById("address").innerHTML = "Please Enter your Email Address";
     }
